@@ -26,5 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/jsch-0.1.44.jar')
+    compile 'com.jcraft:jsch:0.1.54'
 }

@@ -23,10 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/sshText"
-        android:id="@+id/sshOutput"
+        android:id="@+id/shell"
         android:layout_above="@+id/sshText"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/Connect" />
+        android:layout_below="@+id/Connect"
+        android:maxLines = "5"
+        android:scrollbars = "vertical"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -64,7 +68,7 @@
         android:textSize="12sp"
         android:onClick="onClick"
         android:layout_below="@+id/Stop"
-        android:layout_alignStart="@+id/sshOutput" />
+        android:layout_alignStart="@+id/shell" />
 
     <Button
         android:text="Parker"
@@ -77,12 +81,12 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Connect"
+        android:text="SSH exec"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/Connect"
         android:onClick="onClick"
         android:layout_below="@+id/Overtaker"
-        android:layout_alignStart="@+id/sshOutput" />
+        android:layout_alignStart="@+id/Overtaker" />
 
 </RelativeLayout>

@@ -17,24 +17,26 @@ import java.net.InetAddress;
  */
 
 public class UDPSender extends Service{
-    public static final String IP = "WHAT IS THE IP???";
-    public static final int PORT = 80085;
+    public static final int PORT = 54327;
 
     int mStartMode;
     private SharedPreferences toSend;
-    private String function;
+    private String function, ip;
+
 
     @Override
     public void onCreate() {
         toSend = getSharedPreferences("myPreferences",0);
         this.function = toSend.getString("Function", "0");
+        this.ip = toSend.getString("IP", "0");
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            byte[] message = "LAWL,LAWL,LAWL".getBytes();
+            String tosend = encodedNetString(function);
+            byte[] message = tosend.getBytes();
 
-            InetAddress address = InetAddress.getByName(IP);
+            InetAddress address = InetAddress.getByName(ip);
 
             DatagramPacket packet = new DatagramPacket(message, message.length,
                     address, PORT);
@@ -43,6 +45,7 @@ public class UDPSender extends Service{
             DatagramSocket dsocket = new DatagramSocket();
             dsocket.send(packet);
             dsocket.close();
+            System.out.println(function);
 
             Toast.makeText(this, "Sent",
                     Toast.LENGTH_LONG).show();
