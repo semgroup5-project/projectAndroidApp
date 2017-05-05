@@ -21,24 +21,18 @@ public class UDPSender extends Service{
     public static final int PORT = 80085;
 
     int mStartMode;
-    IBinder mBinder;
-    boolean mAllowRebind;
-    private Context context;
     private SharedPreferences toSend;
     private String function;
 
     @Override
     public void onCreate() {
         toSend = getSharedPreferences("myPreferences",0);
-        function = toSend.getString("Function", "0");
+        this.function = toSend.getString("Function", "0");
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        System.out.println("got here");
         try {
-
             byte[] message = "LAWL,LAWL,LAWL".getBytes();
-
 
             InetAddress address = InetAddress.getByName(IP);
 
@@ -49,13 +43,13 @@ public class UDPSender extends Service{
             DatagramSocket dsocket = new DatagramSocket();
             dsocket.send(packet);
             dsocket.close();
-            Toast.makeText(context, "Pedido enviado",
+
+            Toast.makeText(this, "Sent",
                     Toast.LENGTH_LONG).show();
-            System.out.println("Sent");
+
         } catch (Exception e) {
             System.err.println(e);
         }
-
         return mStartMode;
     }
 
@@ -66,8 +60,7 @@ public class UDPSender extends Service{
     }
 
     String encodedNetString(String plainInput){
-
-        //return a NetString in the form of [len]":"[string]","
+        //returns a NetString in the form of [len]":"[string]","
         return  Integer.toString(plainInput.length()) + ":" + plainInput + ",";
     }
 

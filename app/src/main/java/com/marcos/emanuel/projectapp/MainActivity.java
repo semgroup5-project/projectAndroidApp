@@ -8,15 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    private Context context;
     private UDPSender udpSender;
-    private String function;
+    private String command;
+    private int ip;
     private SharedPreferences toSend;
     private SharedPreferences.Editor editor;
     private Button stop;
     private boolean stop_ = false;
+    private Ssh ssh;
+    private EditText IP, input;
 
 
 
@@ -24,15 +27,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this.getApplicationContext();
         stop = (Button) findViewById(R.id.Stop);
         stop.setBackgroundColor(Color.GREEN);
         udpSender = new UDPSender();
         toSend = getSharedPreferences("myPreferences",0);
 
+        IP = (EditText) findViewById(R.id.IPedit) ;
+        input = (EditText) findViewById(R.id.sshText);
+
 
     }
-
     public void onClick(View v) {
         editor = toSend.edit();
         switch (v.getId()) {
@@ -55,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("Function","parker");
                 break;
             case R.id.Connect:
-                editor.putString("Function","connect");
+                ip = Integer.valueOf(IP.getText().toString().trim());
+                command = input.getText().toString().trim();
+                ssh = new Ssh(ip, command, "password");
+
                 break;
             default:
                 throw new RuntimeException("Button ID unknown");
-
-
         }
         startService(v);
        // stopService(v);  //not sure if needed
