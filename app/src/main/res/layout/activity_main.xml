@@ -18,40 +18,71 @@
         android:layout_height="match_parent"
         android:layout_width="300dp" />
 
-    <Button
-        android:text="Button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/button8"
-        android:layout_below="@+id/button7"
-        android:layout_alignStart="@+id/button7" />
-
     <TextView
         android:text="Test ssh text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button8"
-        android:layout_alignStart="@+id/editText5"
-        android:id="@+id/textView10"
-        android:layout_above="@+id/editText5"
+        android:layout_alignStart="@+id/sshText"
+        android:id="@+id/sshOutput"
+        android:layout_above="@+id/sshText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="50dp" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/button7"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView10" />
+        android:layout_below="@+id/Connect" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText5"
+        android:id="@+id/sshText"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName|numberDecimal"
+        android:ems="10"
+        android:layout_alignBottom="@+id/Connect"
+        android:id="@+id/IPedit"
+        android:layout_toEndOf="@+id/Connect" />
+
+    <Button
+        android:text="Stop"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Stop"
+        android:onClick="onClick"
+        android:layout_marginStart="53dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/Overtaker" />
+
+    <Button
+        android:text="Overtaker"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Overtaker"
+        android:textSize="12sp"
+        android:onClick="onClick"
+        android:layout_below="@+id/Stop"
+        android:layout_alignStart="@+id/sshOutput" />
+
+    <Button
+        android:text="Parker"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:onClick="onClick"
+        android:id="@+id/Parker"
+        android:layout_below="@+id/Stop"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Connect"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Connect"
+        android:onClick="onClick"
+        android:layout_below="@+id/Overtaker"
+        android:layout_alignStart="@+id/sshOutput" />
 
 </RelativeLayout>
