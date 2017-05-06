@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 throw new RuntimeException("Button ID unknown");
         }
+        editor.commit();
         stopService(v);  //not sure if needed
     }
 

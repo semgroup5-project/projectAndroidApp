@@ -45,7 +45,7 @@ public class UDPSender extends Service{
             DatagramSocket dsocket = new DatagramSocket();
             dsocket.send(packet);
             dsocket.close();
-            System.out.println(function);
+
 
             Toast.makeText(this, "Sent",
                     Toast.LENGTH_LONG).show();

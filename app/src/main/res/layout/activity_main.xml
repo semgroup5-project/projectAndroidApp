@@ -12,25 +12,24 @@
 
     <VideoView
         android:id="@+id/videoView6"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_height="match_parent"
-        android:layout_width="300dp" />
+        android:layout_above="@+id/sshText"
+        android:layout_width="260dp" />
 
     <TextView
         android:text="Test ssh text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/sshText"
         android:id="@+id/shell"
         android:layout_above="@+id/sshText"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/Connect"
-        android:maxLines = "5"
         android:scrollbars = "vertical"
         android:layout_marginTop="10dp"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        android:layout_alignStart="@+id/Connect" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,7 +38,8 @@
         android:ems="10"
         android:id="@+id/sshText"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/shell" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -51,36 +51,6 @@
         android:layout_toEndOf="@+id/Connect" />
 
     <Button
-        android:text="Stop"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/Stop"
-        android:onClick="onClick"
-        android:layout_marginStart="53dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/Overtaker" />
-
-    <Button
-        android:text="Overtaker"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/Overtaker"
-        android:textSize="12sp"
-        android:onClick="onClick"
-        android:layout_below="@+id/Stop"
-        android:layout_alignStart="@+id/shell" />
-
-    <Button
-        android:text="Parker"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:onClick="onClick"
-        android:id="@+id/Parker"
-        android:layout_below="@+id/Stop"
-        android:layout_alignParentEnd="true" />
-
-    <Button
         android:text="SSH exec"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -88,5 +58,37 @@
         android:onClick="onClick"
         android:layout_below="@+id/Overtaker"
         android:layout_alignStart="@+id/Overtaker" />
+
+    <Button
+        android:text="Overtaker"
+        android:layout_height="40dp"
+        android:id="@+id/Overtaker"
+        android:textSize="10sp"
+        android:onClick="onClick"
+        android:layout_marginStart="26dp"
+        android:layout_width="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/videoView6" />
+
+    <Button
+        android:text="Stop"
+        android:id="@+id/Stop"
+        android:onClick="onClick"
+        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/Connect" />
+
+    <Button
+        android:text="Parker"
+        android:layout_height="40dp"
+        android:textSize="12sp"
+        android:onClick="onClick"
+        android:id="@+id/Parker"
+        android:layout_width="80dp"
+        android:elevation="1dp"
+        android:layout_alignBottom="@+id/Stop"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="100dp" />
 
 </RelativeLayout>
