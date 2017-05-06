@@ -27,6 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/Connect"
         android:scrollbars = "vertical"
+        android:gravity="bottom"
         android:layout_marginTop="10dp"
         android:textSize="9sp"
         android:layout_alignStart="@+id/Connect" />
@@ -66,18 +67,17 @@
         android:textSize="10sp"
         android:onClick="onClick"
         android:layout_marginStart="26dp"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/videoView6" />
 
-    <Button
-        android:text="Stop"
-        android:id="@+id/Stop"
-        android:onClick="onClick"
-        android:layout_height="40dp"
-        android:layout_width="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/Connect" />
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/received" />
 
     <Button
         android:text="Parker"
@@ -85,10 +85,20 @@
         android:textSize="12sp"
         android:onClick="onClick"
         android:id="@+id/Parker"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:elevation="1dp"
-        android:layout_alignBottom="@+id/Stop"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="100dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Stop"
+        android:id="@+id/Stop"
+        android:onClick="onClick"
+        android:layout_height="40dp"
+        android:layout_width="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignBaseline="@+id/Overtaker"
+        android:layout_alignBottom="@+id/Overtaker"
+        android:layout_toEndOf="@+id/Connect" />
 
 </RelativeLayout>

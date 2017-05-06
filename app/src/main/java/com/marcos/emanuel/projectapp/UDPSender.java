@@ -17,7 +17,7 @@ import java.net.InetAddress;
  */
 
 public class UDPSender extends Service{
-    public static final int PORT = 54327;
+    public static final int PORT = 58468;   // change this
 
     int mStartMode;
     private SharedPreferences toSend;
@@ -46,7 +46,7 @@ public class UDPSender extends Service{
             dsocket.send(packet);
             dsocket.close();
 
-
+            System.out.println("sending "+ tosend);
             Toast.makeText(this, "Sent",
                     Toast.LENGTH_LONG).show();
 
