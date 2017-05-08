@@ -9,10 +9,8 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.Properties;
 
 /**
@@ -20,15 +18,15 @@ import java.util.Properties;
  */
 
 public class Ssh extends Activity {
-    private String command, username, password, ip;
+    private String command, username, password, ip, user;
     private int PORT = 22;
     private String output;
 
-    public Ssh(String ip, String command, String password){
+    public Ssh(String ip, String command, String password, String user){
         this.ip = ip;
         this.command = command;
         this.password = password;
-        this.username = "emanuel";  //change user if needed
+        this.username = user;  //change user if needed
         ExecuteRemoteCommand ex = new ExecuteRemoteCommand();
         ex.execute();
     }

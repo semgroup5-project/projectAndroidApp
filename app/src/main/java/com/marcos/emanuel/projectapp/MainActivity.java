@@ -20,14 +20,14 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 
 public class MainActivity extends AppCompatActivity {
-    private String command, ip;
+    private String command, ip, password, user, port;
     private SharedPreferences toSend;
     private SharedPreferences.Editor editor;
     private Button stop;
     private boolean stop_ = false;
     private Ssh ssh;
-    private EditText IP, input;
-    private TextView  shell, received;
+    private EditText IP, input, portText, userText, passText;
+    private TextView  shell;
     private  UdpServerThread udpServerThread;
 
 
@@ -42,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
         IP = (EditText) findViewById(R.id.IPedit) ;
         input = (EditText) findViewById(R.id.sshText);
         shell = (TextView) findViewById(R.id.shell);
-        received = (TextView) findViewById(R.id.received);
+        portText = (EditText) findViewById(R.id.portText);
+        userText = (EditText) findViewById(R.id.userText);
+        passText = (EditText) findViewById(R.id.passText);
+
         shell.setMovementMethod(new ScrollingMovementMethod());
     }
 
@@ -50,7 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         editor = toSend.edit();
         ip = IP.getText().toString().trim();
+        password = passText.getText().toString().trim();
+        port = portText.getText().toString().trim();
+        user = userText.getText().toString().trim();
+
+
         editor.putString("IP", ip);
+        editor.putString("PORT", port);
         switch (v.getId()) {
             case R.id.Stop:
 
@@ -77,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.Connect:
                 command = input.getText().toString().trim();
-                ssh = new Ssh(ip, command, "password goes here");    // Define password for the server here
+                ssh = new Ssh(ip, command, password, user);    // Define password for the server here
                 try{Thread.sleep(500);}catch(Exception ee){}  //small delay
                 String returned = ssh.getOutput();
                 shell.setText(returned );
@@ -118,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-               received.setText(state);
+         //      received.setText(state);
             }
         });
     }
