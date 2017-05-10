@@ -17,7 +17,7 @@ import java.net.InetAddress;
  */
 
 public class UDPSender extends Service{
-    private int PORT ;   // change this
+    private int PORT = 8888 ;   // change this
 
     int mStartMode;
     private SharedPreferences toSend;
@@ -29,7 +29,6 @@ public class UDPSender extends Service{
         toSend = getSharedPreferences("myPreferences",0);
         this.function = toSend.getString("Function", "0");
         this.ip = toSend.getString("IP", "0");
-        this.PORT = Integer.valueOf(toSend.getString("PORT", "0"));
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

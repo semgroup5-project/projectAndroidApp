@@ -1,7 +1,10 @@
 package com.marcos.emanuel.projectapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -15,28 +18,45 @@ import java.util.Properties;
 
 /**
  * @author Emanuel on 05/05/2017.
+ *
+ *
+ * This class is no longer in use
  */
 
 public class Ssh extends Activity {
-    private String command, username, password, ip, user;
+    private String command, username, password, ip;
     private int PORT = 22;
     private String output;
+    private MainActivity main;
+    private ProgressDialog pDialog;
 
-    public Ssh(String ip, String command, String password, String user){
+
+    public Ssh(String ip, String command, String password, String user, MainActivity main){
         this.ip = ip;
         this.command = command;
         this.password = password;
         this.username = user;  //change user if needed
+        this.main = main;
         ExecuteRemoteCommand ex = new ExecuteRemoteCommand();
         ex.execute();
     }
 
 
     private class ExecuteRemoteCommand extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(main);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+        TextView shell = (TextView) findViewById(R.id.shell);
 
         @Override
         protected String doInBackground(String... params) {
-            {
                 try {
                     JSch jsch = new JSch();
                     Session session = jsch.getSession(username, ip, PORT);
@@ -64,26 +84,37 @@ public class Ssh extends Activity {
                     StringBuilder total = new StringBuilder();
                     String line;
                     while ((line = r.readLine()) != null) {
-
                         total.append(line).append('\n');
                     }
+
                     output = total.toString();
                     System.out.println(output);
 
                     channel.disconnect();
                     session.disconnect();
 
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-            }
+
             return null;
         }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            shell.setText(result);
+           // txtH.setText(result.getAtmosphereHumidity());
+        }
+
+
+
     }
 
-    public String getOutput(){
-        return output;
-    }
+
+
+
 
  }
