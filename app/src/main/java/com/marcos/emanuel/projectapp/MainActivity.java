@@ -43,13 +43,19 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private ImageView image;
     private DatagramSocket socket;
+    private BitmapFactory.Options options;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View mainView = findViewById(R.id.activity_main);
+        View root = mainView.getRootView();
+        root.setBackgroundColor(getResources().getColor(android.R.color.background_light));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getSupportActionBar().hide();
+
         stop = (Button) findViewById(R.id.Stop);
         park = (Button) findViewById(R.id.Parker);
         stop.setBackgroundColor(Color.GREEN);
@@ -67,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         image = (ImageView) findViewById(R.id.imageView);
 
-
+//        options = new BitmapFactory.Options();
+//        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
     }
 
@@ -129,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Button ID unknown");
         }
         editor.commit();
-        stopService(v);  //not sure if needed
+        stopService(v);
     }
 
     public void startService(View view) {
@@ -144,8 +151,6 @@ public class MainActivity extends AppCompatActivity {
     protected void Start() {
         udpServerThread = new UdpServerThread(1234);
         udpServerThread.start();
-        //super.onStart();
-        System.out.println("got here");
     }
 
     protected void Stop() {
@@ -154,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
             udpServerThread = null;
             socket.close();
         }
-
-     //   super.onStop();
     }
 
     private void updateState(final Bitmap img){
@@ -179,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     private class UdpServerThread extends Thread{
 
         int serverPort;
-      //  DatagramSocket socket;
+
 
         boolean running;
 
@@ -198,28 +201,24 @@ public class MainActivity extends AppCompatActivity {
             running = true;
             String TAG = MainActivity.class.getSimpleName();
             try {
-              //  updateState("Starting UDP Server");
                 socket = new DatagramSocket(serverPort);
 
-              //  updateState("UDP Server is running");
                 Log.e(TAG, "UDP Server is running");
 
                 while(running){
-                    System.out.println("got here 1");
-                    byte[] buf = new byte[20000];
+                    byte[] buf = new byte[60000];
 
                     // receive request
                     DatagramPacket packet = new DatagramPacket(buf, buf.length);
                     socket.receive(packet);     //this code block the program flow
 
                     buf = packet.getData();
+
                     final Bitmap new_img = BitmapFactory.decodeByteArray(buf, 0,
                             buf.length);
 
-                 //   String lText = new String(buf, 0, packet.getLength());
                     updateState(new_img);
-                    updatePrompt("Received");
-                    System.out.println("got here 2");
+                    updatePrompt("Stream started");
                 }
 
                 Log.e(TAG, "UDP Server ended");
@@ -237,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Async class responsible for ssh
      */
@@ -246,10 +246,9 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             // Showing progress dialog
             pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Please wait...");
+            pDialog.setMessage("Processing command...");
             pDialog.setCancelable(false);
             pDialog.show();
-
         }
 
 
