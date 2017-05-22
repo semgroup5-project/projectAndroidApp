@@ -1,4 +1,5 @@
 package com.marcos.emanuel.projectapp;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,14 +32,34 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Properties;
 
+/**
+ * ProjectAp - A simple android application to interface with OpenDaVINCI scaledcars
+ * Version: 1.0
+ * Authos: Emanuel Marcos
+ * <p>
+ * License: BSD
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the (AUTHOR/ORGANIZATION) nor the names of its contributors may be used to endorse or
+ * promote products derived from this software without specific prior written permission.
+ */
+
 public class MainActivity extends AppCompatActivity {
-    private String command, ip, password, user,  output;
+    private String command, ip, password, user, output;
     private SharedPreferences toSend;
     private SharedPreferences.Editor editor;
     private Button stop, park, videostream;
     private boolean stop_ = false, parked = false, streaming = false;
-    private EditText IP, input,userText, passText;
-    private TextView  shell;
+    private EditText IP, input, userText, passText;
+    private TextView shell;
     private UdpServerThread udpServerThread;
     private ProgressDialog pDialog;
     private ImageView image;
@@ -60,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         park = (Button) findViewById(R.id.Parker);
         stop.setBackgroundColor(Color.GREEN);
         park.setText("Park");
-        toSend = getSharedPreferences("myPreferences",0);
-        IP = (EditText) findViewById(R.id.IPedit) ;
+        toSend = getSharedPreferences("myPreferences", 0);
+        IP = (EditText) findViewById(R.id.IPedit);
         input = (EditText) findViewById(R.id.sshText);
         videostream = (Button) findViewById(R.id.Stream);
         videostream.setText("Video Stream");
@@ -72,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
         shell.setMovementMethod(new ScrollingMovementMethod());
 
         image = (ImageView) findViewById(R.id.imageView);
-
-//        options = new BitmapFactory.Options();
-//        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
     }
 
@@ -92,28 +110,28 @@ public class MainActivity extends AppCompatActivity {
                     stop_ = false;
                     stop.setBackgroundColor(Color.GREEN);
                     stop.setText("Stop");
-                    editor.putString("Function","move");
-                }else {
+                    editor.putString("Function", "move");
+                } else {
                     stop_ = true;
                     stop.setBackgroundColor(Color.RED);
                     stop.setText("Stopped!");
-                    editor.putString("Function","stop");
+                    editor.putString("Function", "stop");
                 }
                 startService(v);
                 break;
             case R.id.Overtaker:
-                editor.putString("Function","overtake");
+                editor.putString("Function", "overtake");
                 startService(v);
                 break;
             case R.id.Parker:
                 if (parked) {
                     parked = false;
                     park.setText("Park");
-                    editor.putString("Function","unpark");
-                }else {
+                    editor.putString("Function", "unpark");
+                } else {
                     parked = true;
                     park.setText("Unpark");
-                    editor.putString("Function","park");
+                    editor.putString("Function", "park");
                 }
                 startService(v);
                 break;
@@ -122,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
                 new ExecuteRemoteCommand().execute();
                 break;
             case R.id.Stream:
-                if (streaming){
+                if (streaming) {
                     streaming = false;
                     videostream.setText("Video Stream");
                     Stop();
-                }else{
+                } else {
                     streaming = true;
                     videostream.setText("Stop Stream");
                     Start();
@@ -154,14 +172,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void Stop() {
-        if(udpServerThread != null){
+        if (udpServerThread != null) {
             udpServerThread.setRunning(false);
             udpServerThread = null;
             socket.close();
         }
     }
 
-    private void updateState(final Bitmap img){
+    private void updateState(final Bitmap img) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -170,16 +188,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updatePrompt(final String prompt){
+    private void updatePrompt(final String prompt) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-             shell.setText(prompt);
+                shell.setText(prompt);
             }
         });
     }
 
-    private class UdpServerThread extends Thread{
+    private class UdpServerThread extends Thread {
 
         int serverPort;
 
@@ -191,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             this.serverPort = serverPort;
         }
 
-        public void setRunning(boolean running){
+        public void setRunning(boolean running) {
             this.running = running;
         }
 
@@ -205,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.e(TAG, "UDP Server is running");
 
-                while(running){
+                while (running) {
                     byte[] buf = new byte[60000];
 
                     // receive request
@@ -228,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                if(socket != null){
+                if (socket != null) {
                     socket.close();
                     Log.e(TAG, "socket.close()");
                 }
@@ -266,13 +284,13 @@ public class MainActivity extends AppCompatActivity {
                 session.connect();
 
 
-                Channel channel=session.openChannel("exec");
-                ((ChannelExec)channel).setCommand(command);
+                Channel channel = session.openChannel("exec");
+                ((ChannelExec) channel).setCommand(command);
 
                 channel.setInputStream(null);
 
-                InputStream in=channel.getInputStream();
-                ((ChannelExec)channel).setErrStream(System.err);
+                InputStream in = channel.getInputStream();
+                ((ChannelExec) channel).setErrStream(System.err);
 
 
                 channel.connect();
@@ -295,7 +313,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             return output;
         }
 
@@ -305,9 +322,5 @@ public class MainActivity extends AppCompatActivity {
                 pDialog.dismiss();
             shell.setText(output);
         }
-
-
-
     }
-
 }
