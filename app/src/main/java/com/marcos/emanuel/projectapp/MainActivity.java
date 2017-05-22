@@ -215,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-
             running = true;
             String TAG = MainActivity.class.getSimpleName();
             try {
@@ -253,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     /**
      * Async class responsible for ssh
